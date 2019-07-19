@@ -10,12 +10,13 @@ export default class WatchlistFetcher {
     return data;
   }
 
-  static async addWatchlist(stock){
+  static async changeWatchlist(stock, action){
+    const symbol = stock.hasOwnProperty('symbol') ? stock.symbol : stock
 
     const response = await fetch(`${apiUrl}/userdata/watchlist`, {
       method: 'POST',
       headers: defaultHeaders(),
-      body: JSON.stringify({symbol: stock.symbol, action: 'ADD'})
+      body: JSON.stringify({symbol: symbol, action: action})
     });
     const data = await response.json();
     return data;

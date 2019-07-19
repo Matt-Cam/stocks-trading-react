@@ -34,25 +34,32 @@ export const fetchWatchListSuccess = data => {
 };
 
 export const addToWatchlist = payload => {
-  //possibly some logic to just return (stop function execution) if
-  // there is already a transactionsList that we can use
-  //..
-  try{
-    WatchlistFetcher.addWatchlist(payload);
-  return {
-    type: ADD_WATCHLIST,
-    payload
-  };
-} catch (err){
-  console.log(err)
-}
+  //need to add logic to prevent from duplicates being added to state
+  //...
+
+  try {
+    WatchlistFetcher.changeWatchlist(payload, 'ADD');
+    return {
+      type: ADD_WATCHLIST,
+      payload
+    };
+  } catch (err) {
+    console.log(err);
+  }
 };
 
+
 export const removeFromWatchlist = symbol => {
+try {
+  WatchlistFetcher.changeWatchlist(symbol, 'REMOVE');
   return {
     type: REMOVE_WATCHLIST,
     symbol
   };
+} catch(err){
+  console.log(err)
+}
+ 
 };
 
 /*--------------------END WATCHLIST LOGIC--------------------*/

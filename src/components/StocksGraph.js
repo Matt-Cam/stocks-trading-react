@@ -9,8 +9,8 @@ const StocksGraph = (props) => {
 
     return (
         <section className="stock-graph">
-            { symbol }
-            { setSelected(5) }
+            { selectedStock }
+            {/* setSelected(5)*/ }
 
             <StockPriceDataWrapper
                 symbol={symbol}

@@ -7,9 +7,11 @@ export const StockContext = React.createContext()
 
 const Home = () => {
     const [selectedStock, setSelected] = useState(10);
+    
 
     return (
         <StockContext.Provider value={[selectedStock, setSelected]}>
+            
             <React.Fragment>
                 <Watchlist />
                 <StocksGraph />
