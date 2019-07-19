@@ -1,7 +1,6 @@
 import React from 'react';
 
 const TransactionRow = ({ transaction, index }) => {
-  console.log({ transaction });
   return (
     <div class='stock-transactions__grid-row'>
       <div class='stock-transactions__grid-cell'>

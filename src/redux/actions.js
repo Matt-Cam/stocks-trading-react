@@ -1,27 +1,51 @@
 import {
   ADD_WATCHLIST,
   REMOVE_WATCHLIST,
-  GET_STOCKS_SUCCESS
+  GET_STOCKS_SUCCESS,
+  GET_TRANSACTIONS_SUCCESS,
+  GET_WATCHLIST_SUCCESS
 } from './actionTypes';
-import {GET_TRANSACTIONS_SUCCESS} from './actionTypes'
-import StocksFetcher from '../data/StocksFetcher';
+
 import { getStocks } from './selectors';
 import { async } from 'q';
+
 import TransactionsFetcher from '../data/TransactionsFetcher';
+import WatchlistFetcher from '../data/WatchlistFetcher';
+import StocksFetcher from '../data/StocksFetcher';
 
-
-export const fetchWatchListIfNecessary = () => async(dispatch, getState) => {
+/*--------------------WATCHLIST LOGIC--------------------*/
+export const fetchWatchlistIfNecessary = () => async (dispatch, getState) => {
   //possibly some logic to just return (stop function execution) if
   // there is already a transactionsList that we can use
   //..
-  
+  try {
+    const data = await WatchlistFetcher.getWatchlist();
+    dispatch(fetchWatchListSuccess(data));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchWatchListSuccess = data => {
+  return {
+    type: GET_WATCHLIST_SUCCESS,
+    payload: data
+  };
 };
 
 export const addToWatchlist = payload => {
+  //possibly some logic to just return (stop function execution) if
+  // there is already a transactionsList that we can use
+  //..
+  try{
+    WatchlistFetcher.addWatchlist(payload);
   return {
     type: ADD_WATCHLIST,
     payload
   };
+} catch (err){
+  console.log(err)
+}
 };
 
 export const removeFromWatchlist = symbol => {
@@ -31,6 +55,9 @@ export const removeFromWatchlist = symbol => {
   };
 };
 
+/*--------------------END WATCHLIST LOGIC--------------------*/
+
+/*--------------------STOCKS LOGIC--------------------*/
 export const fetchStocksIfNecessary = () => async (dispatch, getState) => {
   if (getStocks(getState()).length) {
     return;
@@ -50,9 +77,13 @@ export const fetchStocksSuccess = data => {
     payload: data
   };
 };
+/*--------------------END STOCKS LOGIC--------------------*/
 
-//Below was added by Matt
-export const fetchTransactionsIfNecessary = () => async (dispatch, getState) => {
+/*--------------------TRANSACTIONS LOGIC--------------------*/
+export const fetchTransactionsIfNecessary = () => async (
+  dispatch,
+  getState
+) => {
   //possibly some logic to just return (stop function execution) if
   // there is already a transactionsList that we can use
   //..
@@ -71,5 +102,4 @@ export const fetchTransactionsSuccess = data => {
     payload: data
   };
 };
-
-
+/*--------------------END TRANSACTIONS LOGIC--------------------*/
