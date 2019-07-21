@@ -48,18 +48,16 @@ export const addToWatchlist = payload => {
   }
 };
 
-
 export const removeFromWatchlist = symbol => {
-try {
-  WatchlistFetcher.changeWatchlist(symbol, 'REMOVE');
-  return {
-    type: REMOVE_WATCHLIST,
-    symbol
-  };
-} catch(err){
-  console.log(err)
-}
- 
+  try {
+    WatchlistFetcher.changeWatchlist(symbol, 'REMOVE');
+    return {
+      type: REMOVE_WATCHLIST,
+      symbol
+    };
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 /*--------------------END WATCHLIST LOGIC--------------------*/
@@ -87,6 +85,8 @@ export const fetchStocksSuccess = data => {
 /*--------------------END STOCKS LOGIC--------------------*/
 
 /*--------------------TRANSACTIONS LOGIC--------------------*/
+export const makeTransaction = (data) => async dispatch => {};
+
 export const fetchTransactionsIfNecessary = () => async (
   dispatch,
   getState

@@ -9,4 +9,12 @@ export default class TransactionsFetcher {
         const data = await response.json();
         return data;
     }
+    static async makeTransaction(body) {
+        const response = await fetch(`${apiUrl}/transactions`, {
+            method: "GET",
+            headers: defaultHeaders()
+        });
+        const data = await response.json();
+        return data;
+    }
 }
