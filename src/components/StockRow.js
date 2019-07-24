@@ -1,61 +1,50 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from './Modal';
 import SellBuyForm from './SellBuyForm';
+import { StockContext } from '../pages/Home';
 
-export default class StockRow extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isModalVisible: false
-    };
-  }
+export default function StockRow(props) {
+  const [selectedStock, setSelected] = useContext(StockContext);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [type, setType] = useState(0);
 
-  toggleModal = type => {
-    this.setState(state => {
-      return {
-        isModalVisible: !state.isModalVisible,
-        type: type
-      };
-    });
+  const toggleModal = type => {
+    setType(type);
+    setIsModalVisible(!isModalVisible);
   };
+  return (
 
-  render() {
-    return (
-      <div class='stock-list__grid-row' onClick={() => alert('row clicked')}>
-        <Modal
-          isVisible={this.state.isModalVisible}
-          closeCallback={this.toggleModal}
-        >
-          <SellBuyForm type={this.state.type} />
-        </Modal>
+    <div className='stock-list__grid-row' onClick={() => setSelected('asdfasdf')}>
+      <Modal isVisible={isModalVisible} closeCallback={toggleModal}>
+        <SellBuyForm type={type} />
+      </Modal>
+ 
+      {selectedStock}
 
-        {this.props.onDelete && (
-          <div class='stock-list__grid-cell'>
-            <a onClick={() => this.props.onDelete(this.props.symbol)}>
-              <span class='stock-list__btn stock-list__btn--remove'>
-                &ndash;
-              </span>
-            </a>
-          </div>
-        )}
-        <div class='stock-list__grid-cell'>{this.props.symbol}</div>
-        <div class='stock-list__grid-cell'>{this.props.price}</div>
-        <div class='stock-list__grid-cell'>
-          <a onClick={() => this.toggleModal('buy')}>
-            <span class='btn-transaction btn-transaction--buy'>buy</span>
+      {props.onDelete && (
+        <div className='stock-list__grid-cell'>
+          <a onClick={() => props.onDelete(props.symbol)}>
+            <span className='stock-list__btn stock-list__btn--remove'>&ndash;</span>
           </a>
         </div>
-        {this.props.amount && (
-          <React.Fragment>
-            <div class='stock-list__grid-cell'>
-              <a onClick={() => this.toggleModal('sell')}>
-                <span class='btn-transaction btn-transaction--sell'>sell</span>
-              </a>
-            </div>
-            <div class='stock-list__grid-cell'>35</div>
-          </React.Fragment>
-        )}
+      )}
+      <div className='stock-list__grid-cell'>{props.symbol}</div>
+      <div className='stock-list__grid-cell'>{props.price}</div>
+      <div className='stock-list__grid-cell'>
+        <a onClick={() => toggleModal('buy')}>
+          <span className='btn-transaction btn-transaction--buy'>buy</span>
+        </a>
       </div>
-    );
-  }
+      {props.amount && (
+        <React.Fragment>
+          <div className='stock-list__grid-cell'>
+            <a onClick={() => toggleModal('sell')}>
+              <span className='btn-transaction btn-transaction--sell'>sell</span>
+            </a>
+          </div>
+          <div className='stock-list__grid-cell'>35</div>
+        </React.Fragment>
+      )}
+    </div>
+  );
 }

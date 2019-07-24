@@ -24,7 +24,7 @@ class Watchlist extends React.PureComponent {
   };
 
   componentDidMount() {
-      this.props.fetchWatchlistIfNecessary();
+    this.props.fetchWatchlistIfNecessary();
   }
   render() {
     return (
@@ -47,13 +47,15 @@ class Watchlist extends React.PureComponent {
           {this.props.watchlist.map(stock => {
             const { symbol, amount, price } = stock;
             return (
-              <StockRow
-                symbol={symbol}
-                amount={amount}
-                price={price}
-                onDelete={this.props.removeFromWatchlist}
-                key={symbol}
-              />
+              <React.Fragment>
+                <StockRow
+                  symbol={symbol}
+                  amount={amount}
+                  price={price}
+                  onDelete={this.props.removeFromWatchlist}
+                  key={symbol}
+                />
+              </React.Fragment>
             );
           })}
         </div>

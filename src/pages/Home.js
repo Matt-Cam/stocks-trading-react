@@ -7,7 +7,7 @@ import StocksFollow from '../components/StocksFollow';
 export const StockContext = React.createContext();
 
 const Home = () => {
-  const [selectedStock, setSelected] = useState(0);
+  const [selectedStock, setSelected] = useState('STRK');
 
   return (
     <StockContext.Provider value={[selectedStock, setSelected]}>
