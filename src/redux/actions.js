@@ -85,7 +85,16 @@ export const fetchStocksSuccess = data => {
 /*--------------------END STOCKS LOGIC--------------------*/
 
 /*--------------------TRANSACTIONS LOGIC--------------------*/
-export const makeTransaction = (data) => async dispatch => {};
+export const makeTransaction = (symbol, side, amount) => async dispatch => {
+  try {
+    //let's first wrap up variables into an API friendly object
+    const body = { symbol: 'STRK', side, amount };
+    const data = await TransactionsFetcher.makeTransaction(body);
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const fetchTransactionsIfNecessary = () => async (
   dispatch,

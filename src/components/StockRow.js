@@ -14,12 +14,10 @@ export default function StockRow(props) {
   };
   return (
 
-    <div className='stock-list__grid-row' onClick={() => setSelected('asdfasdf')}>
+    <div className='stock-list__grid-row' onClick={() => setSelected(props.symbol)}>
       <Modal isVisible={isModalVisible} closeCallback={toggleModal}>
         <SellBuyForm type={type} />
       </Modal>
- 
-      {selectedStock}
 
       {props.onDelete && (
         <div className='stock-list__grid-cell'>
