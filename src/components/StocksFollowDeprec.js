@@ -32,7 +32,7 @@ export default class StocksFollow extends React.PureComponent {
           closeCallback={this.toggleModal}
           isVisible={this.state.isModalVisible}
         >
-          <AddFollow />
+
         </Modal>
 
         <div class='stock-list__grid'>
@@ -46,19 +46,20 @@ export default class StocksFollow extends React.PureComponent {
       </section>
     );
   }
+  defaultProps = {
+    stocks: [
+      {
+        name: 'AAP',
+        price: 5,
+        amount: 5
+      },
+      {
+        name: 'AAP',
+        price: 5,
+        amount: 0
+      }
+    ]
+  };
 }
 
-StocksFollow.defaultProps = {
-  stocks: [
-    {
-      name: 'AAP',
-      price: 5,
-      amount: 5
-    },
-    {
-      name: 'AAP',
-      price: 5,
-      amount: 0
-    }
-  ]
-};
+
