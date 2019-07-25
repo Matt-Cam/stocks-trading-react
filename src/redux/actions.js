@@ -3,7 +3,8 @@ import {
   REMOVE_WATCHLIST,
   GET_STOCKS_SUCCESS,
   GET_TRANSACTIONS_SUCCESS,
-  GET_WATCHLIST_SUCCESS
+  GET_WATCHLIST_SUCCESS,
+  FETCH_ALLOCATIONS_SUCCESS
 } from './actionTypes';
 
 import { getStocks } from './selectors';
@@ -12,6 +13,7 @@ import { async } from 'q';
 import TransactionsFetcher from '../data/TransactionsFetcher';
 import WatchlistFetcher from '../data/WatchlistFetcher';
 import StocksFetcher from '../data/StocksFetcher';
+import AllocationsFetcher from '../data/AllocationsFetcher';
 
 /*--------------------WATCHLIST LOGIC--------------------*/
 export const fetchWatchlistIfNecessary = () => async (dispatch, getState) => {
@@ -119,3 +121,21 @@ export const fetchTransactionsSuccess = data => {
   };
 };
 /*--------------------END TRANSACTIONS LOGIC--------------------*/
+
+/*--------------------ALLOCATIONS LOGIC--------------------*/
+export const fetchAllocationsRequest = () => async (dispatch) => {
+  try{
+    const data = await AllocationsFetcher.getAllocations();
+    dispatch(fetchAllocationsSuccess(data))
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const fetchAllocationsSuccess = data => {
+  return {
+    type: FETCH_ALLOCATIONS_SUCCESS, 
+    payload: data
+  }
+}
+

@@ -2,11 +2,13 @@ import React from 'react';
 import StockRow from './StockRow';
 import Modal from './Modal';
 import AddFollow from './AddFollow';
-import { getWatchlist } from '../redux/selectors';
+import { getWatchlist, getAllocations, getMergedWatchListAllocations } from '../redux/selectors';
 import { removeFromWatchlist } from '../redux/actions';
 import { connect } from 'react-redux';
 import StocksDataWrapper from '../data/StocksDataWrapper';
 import { fetchWatchlistIfNecessary } from '../redux/actions';
+import AllocationDataWrapper from '../data/AllocationDataWrapper';
+import {fetchAllocationsRequest} from '../redux/actions'
 
 class Watchlist extends React.PureComponent {
   constructor(props) {
@@ -15,6 +17,12 @@ class Watchlist extends React.PureComponent {
       isModalVisible: false
     };
   }
+
+  mergeWatchlistWithAllocations = (wl) => {
+wl.map(x => {
+  console.log(x);
+})
+        }
 
   toggleModal = ev => {
     ev.stopPropagation();
@@ -25,14 +33,15 @@ class Watchlist extends React.PureComponent {
 
   componentDidMount() {
     this.props.fetchWatchlistIfNecessary();
+    this.props.getAllocations();
   }
   render() {
     return (
-      <section class='stock-list'>
-        <h2 class='stock-list__title'>
+      <section className='stock-list'>
+        <h2 className='stock-list__title'>
           Stocks that I follow
           <a href='#' onClick={this.toggleModal}>
-            <span class='stock-list__btn stock-list__btn--add'>+</span>
+            <span className='stock-list__btn stock-list__btn--add'>+</span>
           </a>
         </h2>
 
@@ -42,8 +51,8 @@ class Watchlist extends React.PureComponent {
         >
           <StocksDataWrapper render={stocks => <AddFollow stocks={stocks} />} />
         </Modal>
-
-        <div class='stock-list__grid'>
+{this.mergeWatchlistWithAllocations(this.props.watchlist)}
+        <div className='stock-list__grid'>
           {this.props.watchlist.map(stock => {
             const { symbol, amount, price } = stock;
             return (
@@ -66,14 +75,17 @@ class Watchlist extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    watchlist: getWatchlist(state)
+    watchlist: getWatchlist(state),
+    allocations: getAllocations(state),
+    mergedList: getMergedWatchListAllocations(state)
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     removeFromWatchlist: symbol => dispatch(removeFromWatchlist(symbol)),
-    fetchWatchlistIfNecessary: () => dispatch(fetchWatchlistIfNecessary())
+    fetchWatchlistIfNecessary: () => dispatch(fetchWatchlistIfNecessary()),
+    getAllocations: () => dispatch(fetchAllocationsRequest())
   };
 };
 
