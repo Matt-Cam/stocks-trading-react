@@ -22,7 +22,7 @@ export default class StocksFollow extends React.PureComponent {
     return (
       <section class='stock-list'>
         <h2 class='stock-list__title'>
-          Stocks that I follow sss
+          Stocks that I follow
           <a href='#' onClick={this.toggleModal}>
             <span class='stock-list__btn stock-list__btn--add'>+</span>
           </a>
@@ -32,34 +32,33 @@ export default class StocksFollow extends React.PureComponent {
           closeCallback={this.toggleModal}
           isVisible={this.state.isModalVisible}
         >
-
+    
         </Modal>
 
         <div class='stock-list__grid'>
-          {this.defaultProps.stocks.map(stock => {
+          {this.props.stocks.map(stock => {
             const { name, amount, price } = stock;
             return (
-              <StockRow name={name} amount={amount} price={price} key={name} />
+              <StockRow symbol={name} amount={amount} price={price} key={name} />
             );
           })}
         </div>
       </section>
     );
   }
-  defaultProps = {
-    stocks: [
-      {
-        name: 'AAP',
-        price: 5,
-        amount: 5
-      },
-      {
-        name: 'AAP',
-        price: 5,
-        amount: 0
-      }
-    ]
-  };
 }
 
-
+StocksFollow.defaultProps = {
+  stocks: [
+    {
+      name: 'AAP',
+      price: 5,
+      amount: 5
+    },
+    {
+      name: 'GOOG',
+      price: 5,
+      amount: 0
+    }
+  ]
+};
