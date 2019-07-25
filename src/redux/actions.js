@@ -85,7 +85,7 @@ export const fetchStocksSuccess = data => {
 /*--------------------END STOCKS LOGIC--------------------*/
 
 /*--------------------TRANSACTIONS LOGIC--------------------*/
-export const makeTransaction = (symbol, side, amount) => async dispatch => {
+export const makeTransaction = (symbol, side, amount) => async()  => {
   try {
     //let's first wrap up variables into an API friendly object
     const body = { symbol: 'STRK', side, amount };
