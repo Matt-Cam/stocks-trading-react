@@ -2,13 +2,17 @@ import React from 'react';
 import StockRow from './StockRow';
 import Modal from './Modal';
 import AddFollow from './AddFollow';
-import { getWatchlist, getAllocations, getMergedWatchListAllocations } from '../redux/selectors';
+import {
+  getWatchlist,
+  getAllocations,
+  getMergedWatchListAllocations
+} from '../redux/selectors';
 import { removeFromWatchlist } from '../redux/actions';
 import { connect } from 'react-redux';
 import StocksDataWrapper from '../data/StocksDataWrapper';
 import { fetchWatchlistIfNecessary } from '../redux/actions';
 import AllocationDataWrapper from '../data/AllocationDataWrapper';
-import {fetchAllocationsRequest} from '../redux/actions'
+import { fetchAllocationsRequest } from '../redux/actions';
 
 class Watchlist extends React.PureComponent {
   constructor(props) {
@@ -18,12 +22,14 @@ class Watchlist extends React.PureComponent {
     };
   }
 
-  mergeWatchlistWithAllocations = (wl) => {
-wl.map(x => {
-  console.log(x);
-})
-        }
+  /*replacing this with a selector to gather a merged WatchList with Allocation List*/
 
+  /*mergeWatchlistWithAllocations = wl => {
+    wl.map(x => {
+      console.log('mergeWatchlistWithAllocations called from Watchlist');
+    });
+  };
+*/
   toggleModal = ev => {
     ev.stopPropagation();
     this.setState(state => {
@@ -34,6 +40,7 @@ wl.map(x => {
   componentDidMount() {
     this.props.fetchWatchlistIfNecessary();
     this.props.getAllocations();
+    console.log(this.props.mergedList);
   }
   render() {
     return (
@@ -51,7 +58,7 @@ wl.map(x => {
         >
           <StocksDataWrapper render={stocks => <AddFollow stocks={stocks} />} />
         </Modal>
-{this.mergeWatchlistWithAllocations(this.props.watchlist)}
+
         <div className='stock-list__grid'>
           {this.props.watchlist.map(stock => {
             const { symbol, amount, price } = stock;

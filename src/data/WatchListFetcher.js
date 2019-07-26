@@ -11,6 +11,7 @@ export default class WatchlistFetcher {
   }
 
   static async changeWatchlist(stock, action){
+    //to handle if we throw it either just stock string )'symbol') or stock object ({stock: 'symbol'})
     const symbol = stock.hasOwnProperty('symbol') ? stock.symbol : stock
 
     const response = await fetch(`${apiUrl}/userdata/watchlist`, {
@@ -22,6 +23,5 @@ export default class WatchlistFetcher {
     return data;
 
   }
-  //http://demomocktradingserver.azurewebsites.net/userdata/watchlist
- // {userid: 'matthew.cameron'}
+
 }
