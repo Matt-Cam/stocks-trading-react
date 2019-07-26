@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { makeTransaction } from '../redux/actions';
+import StocksDataWrapper from '../data/StocksDataWrapper';
 
 const SellBuyForm = props => {
   const [selected, setSelected] = useState();
@@ -14,10 +15,13 @@ const SellBuyForm = props => {
           class='modal__dropdown'
           onChange={ev => setSelected(ev.target.value)}
         >
-          <option value='AMZN'>f</option>
-          <option value='DSNY'>Disney</option>
-          <option value='HULU'>Hulu</option>
-          <option value='NTFLX'>Netflix</option>
+          <StocksDataWrapper
+            render={stocks => {
+              return stocks.map(stock => {
+                return <option>{stock.symbol}</option>;
+              });
+            }}
+          />
         </select>
 
         <input
@@ -44,10 +48,13 @@ const SellBuyForm = props => {
           class='modal__dropdown'
           onChange={ev => setSelected(ev.target.value)}
         >
-          <option value='AMZN'>Amazon</option>
-          <option value='DSNY'>Disney</option>
-          <option value='HULU'>Hulu</option>
-          <option value='NTFLX'>Netflix</option>
+          <StocksDataWrapper
+            render={stocks => {
+              return stocks.map(stock => {
+                return <option>{stock.symbol}</option>;
+              });
+            }}
+          />
         </select>
 
         <input
