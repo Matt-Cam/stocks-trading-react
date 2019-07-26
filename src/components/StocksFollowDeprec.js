@@ -21,6 +21,10 @@ export default class StocksFollow extends React.PureComponent {
   render() {
     return (
       <section class='stock-list'>
+        <h1>
+          This stock follow component for reference only. To be deleted in final
+          app.{' '}
+        </h1>
         <h2 class='stock-list__title'>
           Stocks that I follow
           <a href='#' onClick={this.toggleModal}>
@@ -31,15 +35,18 @@ export default class StocksFollow extends React.PureComponent {
         <Modal
           closeCallback={this.toggleModal}
           isVisible={this.state.isModalVisible}
-        >
-    
-        </Modal>
+        />
 
         <div class='stock-list__grid'>
           {this.props.stocks.map(stock => {
             const { name, amount, price } = stock;
             return (
-              <StockRow symbol={name} amount={amount} price={price} key={name} />
+              <StockRow
+                symbol={name}
+                amount={amount}
+                price={price}
+                key={name}
+              />
             );
           })}
         </div>
