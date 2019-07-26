@@ -13,16 +13,20 @@ export default function StockRow(props) {
     setIsModalVisible(!isModalVisible);
   };
   return (
-
-    <div className='stock-list__grid-row' onClick={() => setSelected(props.symbol)}>
+    <div
+      className='stock-list__grid-row'
+      onClick={() => setSelected(props.symbol)}
+    >
       <Modal isVisible={isModalVisible} closeCallback={toggleModal}>
-        <SellBuyForm type={type} />
+        <SellBuyForm type={type} stock={props.symbol} />
       </Modal>
 
       {props.onDelete && (
         <div className='stock-list__grid-cell'>
           <a onClick={() => props.onDelete(props.symbol)}>
-            <span className='stock-list__btn stock-list__btn--remove'>&ndash;</span>
+            <span className='stock-list__btn stock-list__btn--remove'>
+              &ndash;
+            </span>
           </a>
         </div>
       )}
@@ -37,7 +41,9 @@ export default function StockRow(props) {
         <React.Fragment>
           <div className='stock-list__grid-cell'>
             <a onClick={() => toggleModal('sell')}>
-              <span className='btn-transaction btn-transaction--sell'>sell</span>
+              <span className='btn-transaction btn-transaction--sell'>
+                sell
+              </span>
             </a>
           </div>
           <div className='stock-list__grid-cell'>35</div>
