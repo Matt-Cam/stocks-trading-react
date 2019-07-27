@@ -87,21 +87,17 @@ export const fetchStocksSuccess = data => {
 /*--------------------END STOCKS LOGIC--------------------*/
 
 /*--------------------TRANSACTIONS LOGIC--------------------*/
-export const makeTransaction = (symbol, side, amount) => async()  => {
+export const makeTransaction = (symbol, side, amount) => async () => {
   try {
     //let's first wrap up variables into an API friendly object
     const body = { symbol: 'STRK', side, amount };
     const data = await TransactionsFetcher.makeTransaction(body);
-    console.log(data);
   } catch (err) {
     console.log(err);
   }
 };
 
-export const fetchTransactionsIfNecessary = () => async (
-  dispatch,
-  getState
-) => {
+export const fetchTransactions = () => async (dispatch, getState) => {
   //possibly some logic to just return (stop function execution) if
   // there is already a transactionsList that we can use
   //..
@@ -123,19 +119,18 @@ export const fetchTransactionsSuccess = data => {
 /*--------------------END TRANSACTIONS LOGIC--------------------*/
 
 /*--------------------ALLOCATIONS LOGIC--------------------*/
-export const fetchAllocationsRequest = () => async (dispatch) => {
-  try{
+export const fetchAllocationsRequest = () => async dispatch => {
+  try {
     const data = await AllocationsFetcher.getAllocations();
-    dispatch(fetchAllocationsSuccess(data))
+    dispatch(fetchAllocationsSuccess(data));
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 export const fetchAllocationsSuccess = data => {
   return {
-    type: FETCH_ALLOCATIONS_SUCCESS, 
+    type: FETCH_ALLOCATIONS_SUCCESS,
     payload: data
-  }
-}
-
+  };
+};
