@@ -59,13 +59,12 @@ class Watchlist extends React.PureComponent {
 
         <div className='stock-list__grid'>
           {this.props.mergedList.map(stock => {
-            const { symbol, amount, price } = stock;
+            const { symbol, amount } = stock;
             return (
               <React.Fragment>
                 <StockRow
                   symbol={symbol}
                   amount={amount}
-                  price={price}
                   onDelete={this.props.removeFromWatchlist}
                   key={symbol}
                 />

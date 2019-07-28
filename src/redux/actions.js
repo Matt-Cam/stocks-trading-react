@@ -4,7 +4,8 @@ import {
   GET_STOCKS_SUCCESS,
   GET_TRANSACTIONS_SUCCESS,
   GET_WATCHLIST_SUCCESS,
-  FETCH_ALLOCATIONS_SUCCESS
+  FETCH_ALLOCATIONS_SUCCESS,
+  FETCH_TICKER_SUCCESS
 } from './actionTypes';
 
 import { getStocks } from './selectors';
@@ -86,12 +87,20 @@ export const fetchStocksSuccess = data => {
   };
 };
 
-export const fetchTickerPrice = symbol => async () => {
+export const fetchTickerPrice = symbol => async dispatch => {
   try {
     const data = await TickerFetcher.getTickerPrice(symbol);
+    dispatch(fetchTickerPriceSuccess(data));
   } catch (err) {
     console.log(`Error produced from fetchTickerPrice: ${err}`);
   }
+};
+
+export const fetchTickerPriceSuccess = data => {
+  return {
+    type: FETCH_TICKER_SUCCESS,
+    payload: data
+  };
 };
 /*--------------------END STOCKS LOGIC--------------------*/
 
