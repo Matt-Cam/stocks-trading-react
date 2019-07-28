@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { addToWatchlist } from '../redux/actions';
 
 const AddFollow = ({ stocks, addToWatchlist }) => {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState('ACME');
 
   return (
     <React.Fragment>

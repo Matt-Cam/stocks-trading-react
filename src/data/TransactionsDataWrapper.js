@@ -20,7 +20,7 @@ class TransactionsDataWrapper extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    transactions: getTransactions(state).slice(0, 10)
+    transactions: getTransactions(state)
   };
 };
 

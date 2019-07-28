@@ -7,6 +7,9 @@ const TransactionRow = ({ transaction, index }) => {
         <span class='stock-transactions__grid-text'>{index}</span>
       </div>
       <div class='stock-transactions__grid-cell'>
+        <span class='stock-transactions__grid-text'>{transaction.date}</span>
+      </div>
+      <div class='stock-transactions__grid-cell'>
         <span class='stock-transactions__grid-text'>{transaction.symbol}</span>
       </div>
       <div class='stock-transactions__grid-cell'>
@@ -28,7 +31,9 @@ const TransactionRow = ({ transaction, index }) => {
         </span>
       </div>
       <div class='stock-transactions__grid-cell'>
-        <span class='stock-transactions__grid-text'>{(transaction.tickPrice * transaction.amount).toFixed(2)}</span>
+        <span class='stock-transactions__grid-text'>
+          {(transaction.tickPrice * transaction.amount).toFixed(2)}
+        </span>
       </div>
     </div>
   );

@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import { makeTransaction } from '../redux/actions';
 import StocksDataWrapper from '../data/StocksDataWrapper';
 
+//this is used to determine if stock in dropdown is the one to set as selected on initial pop up
+const setSelectPropOnSelected = (stock, selected) => {
+  return stock === selected ? 'selected' : '';
+};
+
 const SellBuyForm = props => {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(props.stock);
   const [amount, setAmount] = useState();
 
   if (props.type === 'buy') {
@@ -18,7 +23,15 @@ const SellBuyForm = props => {
           <StocksDataWrapper
             render={stocks => {
               return stocks.map(stock => {
-                return <option>{stock.symbol}</option>;
+                return (
+                  <option
+                    value={stock.symbol}
+                    key={stock.symbol}
+                    selected={setSelectPropOnSelected(stock.symbol, selected)}
+                  >
+                    {stock.symbol}
+                  </option>
+                );
               });
             }}
           />
@@ -51,7 +64,7 @@ const SellBuyForm = props => {
           <StocksDataWrapper
             render={stocks => {
               return stocks.map(stock => {
-                return <option>{stock.symbol}</option>;
+                return <option key={stocks.symbol}>{stock.symbol}</option>;
               });
             }}
           />

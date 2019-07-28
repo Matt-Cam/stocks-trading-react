@@ -10,8 +10,7 @@ import {
 import { removeFromWatchlist } from '../redux/actions';
 import { connect } from 'react-redux';
 import StocksDataWrapper from '../data/StocksDataWrapper';
-import { fetchWatchlistIfNecessary } from '../redux/actions';
-import AllocationDataWrapper from '../data/AllocationDataWrapper';
+import { fetchWatchlist } from '../redux/actions';
 import { fetchAllocationsRequest } from '../redux/actions';
 
 class Watchlist extends React.PureComponent {
@@ -38,9 +37,8 @@ class Watchlist extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.props.fetchWatchlistIfNecessary();
+    this.props.fetchWatchlist();
     this.props.getAllocations();
-    console.log(this.props.mergedList);
   }
   render() {
     return (
@@ -60,7 +58,7 @@ class Watchlist extends React.PureComponent {
         </Modal>
 
         <div className='stock-list__grid'>
-          {this.props.watchlist.map(stock => {
+          {this.props.mergedList.map(stock => {
             const { symbol, amount, price } = stock;
             return (
               <React.Fragment>
@@ -91,7 +89,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     removeFromWatchlist: symbol => dispatch(removeFromWatchlist(symbol)),
-    fetchWatchlistIfNecessary: () => dispatch(fetchWatchlistIfNecessary()),
+    fetchWatchlist: () => dispatch(fetchWatchlist()),
     getAllocations: () => dispatch(fetchAllocationsRequest())
   };
 };

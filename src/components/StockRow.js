@@ -46,7 +46,7 @@ export default function StockRow(props) {
               </span>
             </a>
           </div>
-          <div className='stock-list__grid-cell'>35</div>
+          <div className='stock-list__grid-cell'>{props.amount}</div>
         </React.Fragment>
       )}
     </div>

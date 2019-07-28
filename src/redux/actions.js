@@ -14,9 +14,10 @@ import TransactionsFetcher from '../data/TransactionsFetcher';
 import WatchlistFetcher from '../data/WatchlistFetcher';
 import StocksFetcher from '../data/StocksFetcher';
 import AllocationsFetcher from '../data/AllocationsFetcher';
+import TickerFetcher from '../data/TickerFetcher';
 
 /*--------------------WATCHLIST LOGIC--------------------*/
-export const fetchWatchlistIfNecessary = () => async (dispatch, getState) => {
+export const fetchWatchlist = () => async (dispatch, getState) => {
   //possibly some logic to just return (stop function execution) if
   // there is already a transactionsList that we can use
   //..
@@ -24,7 +25,7 @@ export const fetchWatchlistIfNecessary = () => async (dispatch, getState) => {
     const data = await WatchlistFetcher.getWatchlist();
     dispatch(fetchWatchListSuccess(data));
   } catch (err) {
-    console.log(err);
+    console.log(`Error produced from fetchWatchList: ${err}`);
   }
 };
 
@@ -46,7 +47,7 @@ export const addToWatchlist = payload => {
       payload
     };
   } catch (err) {
-    console.log(err);
+    console.log(`Error produced from addToWatchlist: ${err}`);
   }
 };
 
@@ -58,7 +59,7 @@ export const removeFromWatchlist = symbol => {
       symbol
     };
   } catch (err) {
-    console.log(err);
+    console.log(`Error produced from removeFromWatchList: ${err}`);
   }
 };
 
@@ -74,7 +75,7 @@ export const fetchStocksIfNecessary = () => async (dispatch, getState) => {
     const data = await StocksFetcher.getStocks();
     dispatch(fetchStocksSuccess(data));
   } catch (err) {
-    console.error(err);
+    console.error(`Error produced from fetchStocksIfNecessary: ${err}`);
   }
 };
 
@@ -84,14 +85,26 @@ export const fetchStocksSuccess = data => {
     payload: data
   };
 };
+
+export const fetchTickerPrice = symbol => async () => {
+  try {
+    const data = await TickerFetcher.getTickerPrice(symbol);
+  } catch (err) {
+    console.log(`Error produced from fetchTickerPrice: ${err}`);
+  }
+};
 /*--------------------END STOCKS LOGIC--------------------*/
 
 /*--------------------TRANSACTIONS LOGIC--------------------*/
-export const makeTransaction = (symbol, side, amount) => async () => {
+export const makeTransaction = (symbol, side, amount) => async dispatch => {
   try {
     //let's first wrap up variables into an API friendly object
-    const body = { symbol: 'STRK', side, amount };
+    const body = { symbol, side, amount };
     const data = await TransactionsFetcher.makeTransaction(body);
+
+    //here we can use the response of API to update our allocations
+    dispatch(fetchAllocationsSuccess(data.allocations));
+    dispatch(fetchTransactions());
   } catch (err) {
     console.log(err);
   }
