@@ -27,6 +27,7 @@ export const getMergedWatchListAllocations = state => {
 };
 
 export const getTickerPrices = state => state.tickerPrices;
+
 /*
 Allocation example
 [

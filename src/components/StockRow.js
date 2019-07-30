@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import Modal from './Modal';
 import SellBuyForm from './SellBuyForm';
 import { StockContext } from '../pages/Home';
+import TickerPriceDataWrapper from '../data/TickerPriceDataWrapper';
 
 export default function StockRow(props) {
   const [selectedStock, setSelected] = useContext(StockContext);
@@ -31,7 +32,9 @@ export default function StockRow(props) {
         </div>
       )}
       <div className='stock-list__grid-cell'>{props.symbol}</div>
-      <div className='stock-list__grid-cell'>{props.price}</div>
+      <div className='stock-list__grid-cell'>
+        <TickerPriceDataWrapper symbol={props.symbol} />
+      </div>
       <div className='stock-list__grid-cell'>
         <a onClick={() => toggleModal('buy')}>
           <span className='btn-transaction btn-transaction--buy'>buy</span>
