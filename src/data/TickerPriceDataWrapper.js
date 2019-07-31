@@ -26,7 +26,7 @@ class TickerPriceDataWrapper extends React.Component {
     this.props.fetchTickerPrice(this.props.symbol);
     this.interval = setInterval(() => {
       this.props.fetchTickerPrice(this.props.symbol);
-    }, 10000);
+    }, 5000);
   }
 }
 
