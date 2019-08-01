@@ -1,6 +1,6 @@
 import { apiUrl, defaultHeaders } from './defaultHeaders';
-
-export default class TickerFetcher {
+const nes = require('nes');
+export class TickerFetcher {
   static async getTickerPrice(symbol) {
     const response = await fetch(`${apiUrl}/stocks/${symbol}/price`, {
       method: 'GET',

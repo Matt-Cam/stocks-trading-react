@@ -1,4 +1,8 @@
-import { ADD_WATCHLIST, REMOVE_WATCHLIST, GET_WATCHLIST_SUCCESS,  } from '../actionTypes';
+import {
+  ADD_WATCHLIST,
+  REMOVE_WATCHLIST,
+  GET_WATCHLIST_SUCCESS
+} from '../actionTypes';
 
 const initialState = [];
 

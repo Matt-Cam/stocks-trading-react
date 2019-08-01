@@ -16,7 +16,8 @@ import TransactionsFetcher from '../data/TransactionsFetcher';
 import WatchlistFetcher from '../data/WatchlistFetcher';
 import StocksFetcher from '../data/StocksFetcher';
 import AllocationsFetcher from '../data/AllocationsFetcher';
-import TickerFetcher from '../data/TickerFetcher';
+import { TickerFetcher } from '../data/TickerFetcher';
+import { ConnectTicker } from '../data/ConnectTicker';
 
 /*--------------------WATCHLIST LOGIC--------------------*/
 export const fetchWatchlist = () => async (dispatch, getState) => {
@@ -86,6 +87,25 @@ export const fetchStocksSuccess = data => {
     type: GET_STOCKS_SUCCESS,
     payload: data
   };
+};
+
+export const tickerSubscription = symbol => (dispatch, getState) => {
+  ConnectTicker.connect().then(client => {
+    client.subscribe('/livestream/' + symbol, update => {
+      console.log(update);
+      //see if we already have a price for this stock,
+      //if we don't then add it to state, otherwise update existing
+      let priceAlreadyInStore =
+        getState().tickerPrices.filter(e => e.stock === symbol).length > 0
+          ? true
+          : false;
+      if (priceAlreadyInStore) {
+        dispatch(updateTickerPrice(update));
+      } else {
+        dispatch(fetchTickerPriceSuccess(update));
+      }
+    });
+  });
 };
 
 export const fetchTickerPrice = symbol => async (dispatch, getState) => {
