@@ -23,7 +23,8 @@ export default class HighchartsWrapper extends React.Component {
     if (this.chart) {
       this.chart.update({
         ...defaultConfig,
-        series: [{ data: this.props.data }]
+        series: this.props.data
+        //series: this.props.data
       });
     } else {
       this.createChart();
@@ -46,24 +47,32 @@ const defaultConfig = {
     text: ''
   },
   xAxis: {
-    categories: ['10:00', '10:20', '10:40', '11:00']
-  },
-  yAxis: {
-    title: {
-      text: ''
+    type: 'datetime',
+
+    labels: {
+      formatter: function() {
+        return Highcharts.dateFormat('%e %b %y', this.value);
+      }
+    },
+    dateTimeLabelFormats: {
+      second: '%Y-%m-%d<br/>%H:%M:%S',
+      minute: '%Y-%m-%d<br/>%H:%M',
+      hour: '%Y-%m-%d<br/>%H:%M',
+      day: '%Y<br/>%m-%d',
+      week: '%Y<br/>%m-%d',
+      month: '%Y-%m',
+      year: '%Y'
     }
   },
-  plotOptions: {
-    line: {
-      dataLabels: {
-        enabled: false
-      },
-      enableMouseTracking: false
+  tooltip: {
+    formatter: function() {
+      return (
+        'x: ' +
+        Highcharts.dateFormat('%e %b %y %H:%M:%S', this.x) +
+        ' y: ' +
+        this.y.toFixed(2)
+      );
     }
   },
-  series: [
-    {
-      name: 'AAPL'
-    }
-  ]
+  series: [{ name: 'aggregated', data: [] }, { name: 'detailed', data: [] }]
 };
