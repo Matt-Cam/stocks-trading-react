@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getTickerPrices } from '../redux/selectors';
 import { fetchTickerPrice } from '../redux/actions';
+import AllocationsFetcher from './AllocationsFetcher';
 
 class TickerPriceDataWrapper extends React.Component {
   render() {
@@ -24,10 +25,18 @@ class TickerPriceDataWrapper extends React.Component {
 
   componentDidMount() {
     this.props.fetchTickerPrice(this.props.symbol);
-    this.interval = setInterval(() => {
+    //replace this interval with WebSocket
+    /* this.interval = setInterval(() => {
       this.props.fetchTickerPrice(this.props.symbol);
-    }, 5000);
+    }, 5000);*/
   }
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+  clearInterv = () => {
+    alert('hello');
+    //clearInterval(this.interval);
+  };
 }
 
 const mapStateToProps = state => {
