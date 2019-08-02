@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import StockTransactions from '../components/StocksTransactions';
 import StocksGraph from '../components/StocksGraph';
 import Watchlist from '../components/Watchlist';

@@ -1,5 +1,4 @@
 import React from 'react';
-import StocksFetcher from './StocksFetcher';
 
 import { connect } from 'react-redux';
 import { getStocks } from '../redux/selectors';

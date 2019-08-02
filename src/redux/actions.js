@@ -10,7 +10,6 @@ import {
 } from './actionTypes';
 
 import { getStocks } from './selectors';
-import { async } from 'q';
 
 import TransactionsFetcher from '../data/TransactionsFetcher';
 import WatchlistFetcher from '../data/WatchlistFetcher';

@@ -1,4 +1,3 @@
-import { apiUrl, defaultHeaders } from './defaultHeaders';
 const nes = require('nes');
 export class ConnectTicker {
   nesClient;

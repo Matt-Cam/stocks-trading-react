@@ -1,4 +1,3 @@
-import { ADD_TRANSACTION } from '../actionTypes';
 import { GET_TRANSACTIONS_SUCCESS } from '../actionTypes';
 
 const initialState = [{}];
