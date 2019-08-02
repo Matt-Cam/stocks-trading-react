@@ -2,7 +2,9 @@ export const getStocks = state => state.stocks;
 
 export const getWatchlist = state => state.watchlist;
 
-export const getTransactions = state => state.transactions;
+export const getTransactions = state => {
+  return state.transactions.reverse();
+};
 
 export const getAllocations = state => state.allocations;
 
@@ -26,7 +28,8 @@ export const getMergedWatchListAllocations = state => {
   return merged;
 };
 
-export const getTickerPrices = state => state.tickerPrices;
+export const getTickerPrice = (state, symbol) =>
+  state.tickerPrices.find(el => el.stock === symbol);
 
 /*
 Allocation example
