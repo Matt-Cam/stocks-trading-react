@@ -5,7 +5,6 @@ import {
   GET_TRANSACTIONS_SUCCESS,
   GET_WATCHLIST_SUCCESS,
   FETCH_ALLOCATIONS_SUCCESS,
-  FETCH_TICKER_SUCCESS,
   UPDATE_TICKER
 } from './actionTypes';
 
@@ -99,33 +98,6 @@ export const tickerSubscription = symbol => (dispatch, getState) => {
 export const updateTickerPrice = data => {
   return {
     type: UPDATE_TICKER,
-    payload: data
-  };
-};
-
-export const fetchTickerPrice = symbol => async (dispatch, getState) => {
-  try {
-    const data = await TickerFetcher.getTickerPrice(symbol);
-
-    //see if we already have a price for this stock,
-    //if we don't then add it to state, otherwise update existing
-    let priceAlreadyInStore =
-      getState().tickerPrices.filter(e => e.stock === symbol).length > 0
-        ? true
-        : false;
-    if (priceAlreadyInStore) {
-      dispatch(updateTickerPrice(data));
-    } else {
-      dispatch(fetchTickerPriceSuccess(data));
-    }
-  } catch (err) {
-    console.log(`Error produced from fetchTickerPrice: ${err}`);
-  }
-};
-
-export const fetchTickerPriceSuccess = data => {
-  return {
-    type: FETCH_TICKER_SUCCESS,
     payload: data
   };
 };
