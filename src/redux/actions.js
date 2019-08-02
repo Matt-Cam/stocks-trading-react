@@ -92,20 +92,16 @@ export const fetchStocksSuccess = data => {
 export const tickerSubscription = symbol => (dispatch, getState) => {
   ConnectTicker.connect().then(client => {
     client.subscribe('/livestream/' + symbol, update => {
-      //see if we already have a price for this stock,
-      //if we don't then add it to state, otherwise update existing
       console.log(update);
-      let priceAlreadyInStore =
-        getState().tickerPrices.filter(e => e.stock === symbol).length > 0
-          ? true
-          : false;
-      if (priceAlreadyInStore) {
-        dispatch(updateTickerPrice(update));
-      } else {
-        dispatch(fetchTickerPriceSuccess(update));
-      }
+      dispatch(updateTickerPrice(update));
     });
   });
+};
+export const updateTickerPrice = data => {
+  return {
+    type: UPDATE_TICKER,
+    payload: data
+  };
 };
 
 export const fetchTickerPrice = symbol => async (dispatch, getState) => {
@@ -134,12 +130,7 @@ export const fetchTickerPriceSuccess = data => {
     payload: data
   };
 };
-export const updateTickerPrice = data => {
-  return {
-    type: UPDATE_TICKER,
-    payload: data
-  };
-};
+
 /*--------------------END STOCKS LOGIC--------------------*/
 
 /*--------------------TRANSACTIONS LOGIC--------------------*/

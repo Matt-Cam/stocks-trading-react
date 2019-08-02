@@ -5,15 +5,15 @@ import { tickerSubscription } from '../redux/actions';
 
 const TickerPriceDataWrapper = props => {
   useEffect(() => {
+    console.log('here');
     props.tickerSubscription(props.symbol);
   });
-  return <div>{loadingOrPrice(props.tickerPrice)}</div>;
+
+  return (
+    <div>{props.tickerPrice ? props.tickerPrice.toFixed(2) : 'loading...'}</div>
+  );
 };
-//if the obj is undefined, return 'loading', else return obj.price
-const loadingOrPrice = obj => {
-  if (obj) return obj.price.toFixed(2);
-  else return 'loading';
-};
+
 const mapStateToProps = (state, ownProps) => {
   return {
     tickerPrice: getTickerPrice(state, ownProps.symbol)

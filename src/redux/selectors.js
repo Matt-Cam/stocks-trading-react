@@ -28,8 +28,9 @@ export const getMergedWatchListAllocations = state => {
   return merged;
 };
 
-export const getTickerPrice = (state, symbol) =>
-  state.tickerPrices.find(el => el.stock === symbol);
+export const getTickerPrice = (state, symbol) => {
+  return state.tickerPrices[symbol];
+};
 
 /*
 Allocation example
