@@ -1,37 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
-export default class StockPriceDataWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: []
-    };
-  }
+const StockPriceDataWrapper = props => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    {
+      setData(dataMock);
+    }
+  });
 
-  render() {
-    return this.props.render(this.state.data);
-  }
-
-  // change to useEffect
-  componentDidMount() {
-    // get data from the server
-    this.setState({
-      data: dataMock
-    });
-  }
-}
-/*
-const dataMock = [
-  {
-    name: 'test',
-    data: [1, 2, 3]
-  },
-  {
-    name: 'other test',
-    data: [2, 3, 4, 5]
-  }
-];
-*/
+  return (
+    <section>
+      <div>{props.symbol}</div>
+      {props.render(data)}
+    </section>
+  );
+};
 
 const dataMock = [
   {
@@ -69,3 +53,20 @@ const dataMock = [
     ]
   }
 ];
+
+const mapDispatchToProps = dispatch => {
+  return {
+    //increment: () => dispatch()
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    //tickerPrice: getTickerPrice(state, ownProps.symbol)
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(StockPriceDataWrapper);

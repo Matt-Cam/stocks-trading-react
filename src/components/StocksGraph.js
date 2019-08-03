@@ -3,27 +3,24 @@ import HighchartsWrapper from './HighchartsWrapper';
 import StockPriceDataWrapper from '../data/StockPriceDataWrapper';
 import { StockContext } from '../pages/Home';
 
-const StocksGraph = (props) => {
-    const [selectedStock, setSelected] = useContext(StockContext);
-    const { symbol } = props;
+const StocksGraph = props => {
+  const [selectedStock, setSelected] = useContext(StockContext);
+  const { symbol } = selectedStock;
 
-    return (
-        <section className="stock-graph">
-            { selectedStock }
-    
-    
-            <StockPriceDataWrapper
-                symbol={symbol}
-                render={data => (
-                    <HighchartsWrapper data={data} />
-                )}
-            />
-        </section>
-    );
-}
+  return (
+    <section className='stock-graph'>
+      {selectedStock}
+
+      <StockPriceDataWrapper
+        symbol={selectedStock}
+        render={data => <HighchartsWrapper data={data} />}
+      />
+    </section>
+  );
+};
 
 StocksGraph.defaultProps = {
-    stockSymbol: null
+  stockSymbol: null
 };
 
 export default StocksGraph;
