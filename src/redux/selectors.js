@@ -28,25 +28,8 @@ export const getMergedWatchListAllocations = state => {
   return merged;
 };
 
+export const getHistoricPrices = state => state.historicPrices;
+
 export const getTickerPrice = (state, symbol) => {
   return state.tickerPrices[symbol];
 };
-
-/*
-Allocation example
-[
-0: {symbol: "STRK", amount: 325}
-1: {symbol: "ACME", amount: 51}
-2: {symbol: "UMBR", amount: 8}
-3: {symbol: "WKI", amount: 8}
-4: {symbol: "WYNE", amount: 66}
-5: {symbol: "NTC", amount: 300}
-]
-*/
-/*
-[ 
-{symbol: "NTC"},
- {symbol: "INTC"},
- {symbol: "WKI"}
-]
-*/

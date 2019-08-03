@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addToWatchlist } from '../redux/actions';
 
 const AddFollow = ({ stocks, addToWatchlist }) => {
+  //set the default selected stock to 'ACME'
   const [selected, setSelected] = useState('ACME');
 
   return (

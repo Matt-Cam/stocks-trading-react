@@ -17,15 +17,39 @@ export default class HighchartsWrapper extends React.Component {
 
   componentDidMount() {
     this.createChart();
+    console.log(this.props.data);
   }
 
+  //our Highcharts is expecting date objects, and x and y coordinates
+  //so let's clean up array to be more friendly
+  cleanForHighcharts(arr) {
+    return arr.map(el => {
+      let addedElement = {};
+      addedElement.x = new Date(el.date);
+      addedElement.y = el.price;
+      return addedElement;
+    });
+  }
   componentDidUpdate() {
+    console.log('highcharts component did update with new data: ');
+    console.log(this.props.data);
+
     if (this.chart) {
       this.chart.update({
         ...defaultConfig,
-        series: this.props.data
+        series: [
+          {
+            name: 'Detailed',
+            data: this.cleanForHighcharts(this.props.data.detailed)
+          },
+          {
+            name: 'Aggregated',
+            data: this.cleanForHighcharts(this.props.data.aggregated)
+          }
+        ]
         //series: this.props.data
       });
+      console.log(this.chart.series);
     } else {
       this.createChart();
     }
@@ -74,5 +98,5 @@ const defaultConfig = {
       );
     }
   },
-  series: [{ name: 'aggregated', data: [] }, { name: 'detailed', data: [] }]
+  series: []
 };

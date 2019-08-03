@@ -33,7 +33,8 @@ export default function StockRow(props) {
       )}
       <div className='stock-list__grid-cell'>{props.symbol}</div>
       <div className='stock-list__grid-cell'>
-        <TickerPriceDataWrapper symbol={props.symbol} />
+        {/*} <TickerPriceDataWrapper symbol={props.symbol} />{*/}
+        uncomm.
       </div>
       <div className='stock-list__grid-cell'>
         <a onClick={() => toggleModal('buy')}>

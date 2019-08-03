@@ -5,23 +5,23 @@ import {
   GET_TRANSACTIONS_SUCCESS,
   GET_WATCHLIST_SUCCESS,
   FETCH_ALLOCATIONS_SUCCESS,
-  UPDATE_TICKER
+  UPDATE_TICKER,
+  FETCH_HISTORIC_PRICES_BEGIN,
+  FETCH_HISTORIC_PRICES_FAILURE,
+  FETCH_HISTORIC_PRICES_SUCCESS
 } from './actionTypes';
 
 import { getStocks } from './selectors';
 
-import TransactionsFetcher from '../data/TransactionsFetcher';
-import WatchlistFetcher from '../data/WatchlistFetcher';
-import StocksFetcher from '../data/StocksFetcher';
-import AllocationsFetcher from '../data/AllocationsFetcher';
-import { TickerFetcher } from '../data/TickerFetcher';
-import { ConnectTicker } from '../data/ConnectTicker';
+import TransactionsFetcher from '../data/APICalls/TransactionsFetcher';
+import WatchlistFetcher from '../data/APICalls/WatchlistFetcher';
+import StocksFetcher from '../data/APICalls/StocksFetcher';
+import AllocationsFetcher from '../data/APICalls/AllocationsFetcher';
+import { ConnectTicker } from '../data/APICalls/ConnectTicker';
+import HistoricPricesFetcher from '../data/APICalls/HistoricPricesFetcher';
 
 /*--------------------WATCHLIST LOGIC--------------------*/
 export const fetchWatchlist = () => async (dispatch, getState) => {
-  //possibly some logic to just return (stop function execution) if
-  // there is already a transactionsList that we can use
-  //..
   try {
     const data = await WatchlistFetcher.getWatchlist();
     dispatch(fetchWatchListSuccess(data));
@@ -65,6 +65,39 @@ export const removeFromWatchlist = symbol => {
 };
 
 /*--------------------END WATCHLIST LOGIC--------------------*/
+
+/*-------------------- Historic Prices LOGIC--------------------*/
+
+/*
+ * @param {string} symbol : the symbol you want prices for
+ * @param {string} timePeriod : either yearly or today
+ */
+export const fetchHistoricPrices = (symbol, timePeriod) => dispatch => {
+  dispatch(fetchHistoricPricesBegin());
+  HistoricPricesFetcher.getHistoricPrices(symbol, timePeriod)
+    .then(response => {
+      //console.log(response);
+      dispatch(fetchHistoricPricesSuccess(response));
+    })
+    .catch(err => {
+      console.error(`error produced from fetchHistoricPrices: ${err}`);
+    });
+};
+
+export const fetchHistoricPricesBegin = () => ({
+  type: FETCH_HISTORIC_PRICES_BEGIN
+});
+export const fetchHistoricPricesSuccess = prices => ({
+  type: FETCH_HISTORIC_PRICES_SUCCESS,
+  payload: prices
+});
+
+export const fetchHistoricPricesFailure = error => ({
+  type: FETCH_HISTORIC_PRICES_FAILURE,
+  payload: { error }
+});
+
+/*--------------------End Historic Prices LOGIC--------------------*/
 
 /*--------------------STOCKS LOGIC--------------------*/
 export const fetchStocksIfNecessary = () => async (dispatch, getState) => {

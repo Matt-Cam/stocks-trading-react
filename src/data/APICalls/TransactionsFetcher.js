@@ -1,4 +1,4 @@
-import { apiUrl, defaultHeaders } from './defaultHeaders';
+import { apiUrl, defaultHeaders } from '../defaultHeaders';
 
 export default class TransactionsFetcher {
   static async getTransactions() {
