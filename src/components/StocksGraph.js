@@ -9,8 +9,7 @@ const StocksGraph = props => {
 
   return (
     <section className='stock-graph'>
-      {selectedStock}
-
+      StockGraph loaded with symbol: {selectedStock}
       <StockPriceDataWrapper
         symbol={selectedStock}
         render={data => <HighchartsWrapper data={data} />}

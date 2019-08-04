@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <StockContext.Provider value={[selectedStock, setSelected]}>
-      the selected stock is {selectedStock}
+      Home loaded with symbol: {selectedStock}
       <React.Fragment>
         <Watchlist />
         <StocksGraph />

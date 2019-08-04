@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   prices: {},
-  loading: false,
+  loading: true,
   error: null
 };
 

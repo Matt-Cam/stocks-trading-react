@@ -12,12 +12,30 @@ export default class HighchartsWrapper extends React.Component {
   }
 
   render() {
-    return <div ref={this.graph} />;
+    return (
+      <React.Fragment>
+        <div>HighchartsWrapper Component mounted</div>
+        <div ref={this.graph} />
+      </React.Fragment>
+    );
   }
 
   componentDidMount() {
     this.createChart();
-    console.log(this.props.data);
+    // this.chart.update({
+    //   ...defaultConfig,
+    //   series: [
+    //     {
+    //       name: 'Detailed',
+    //       data: this.cleanForHighcharts(this.props.data.prices.detailed)
+    //     },
+    //     {
+    //       name: 'Aggregated',
+    //       data: this.cleanForHighcharts(this.props.data.prices.aggregated)
+    //     }
+    //   ]
+    //   //series: this.props.data
+    // });
   }
 
   //our Highcharts is expecting date objects, and x and y coordinates
@@ -40,16 +58,17 @@ export default class HighchartsWrapper extends React.Component {
         series: [
           {
             name: 'Detailed',
-            data: this.cleanForHighcharts(this.props.data.detailed)
+            // data: [{ x: new Date(), y: 20 }]
+            data: this.cleanForHighcharts(this.props.data.prices.detailed)
           },
           {
             name: 'Aggregated',
-            data: this.cleanForHighcharts(this.props.data.aggregated)
+            //data: [{ x: new Date(), y: 33 }]
+            data: this.cleanForHighcharts(this.props.data.prices.aggregated)
           }
         ]
         //series: this.props.data
       });
-      console.log(this.chart.series);
     } else {
       this.createChart();
     }
@@ -98,5 +117,5 @@ const defaultConfig = {
       );
     }
   },
-  series: []
+  series: [{}, {}]
 };
