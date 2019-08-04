@@ -9,6 +9,7 @@ export const getTransactions = state => {
 export const getAllocations = state => state.allocations;
 
 export const getMergedWatchListAllocations = state => {
+  console.log('getMergedWatchlist has been run');
   //objToReturn will act as local copy of watchedStock so we don't mutate watchedStock
   let objToReturn = {};
   let merged = state.watchlist.map(watchedStock => {

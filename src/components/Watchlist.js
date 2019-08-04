@@ -11,7 +11,7 @@ import { removeFromWatchlist } from '../redux/actions';
 import { connect } from 'react-redux';
 import StocksDataWrapper from '../data/StocksDataWrapper';
 import { fetchWatchlist } from '../redux/actions';
-import { fetchAllocationsRequest } from '../redux/actions';
+import { fetchAllocationsBegin } from '../redux/actions';
 
 class Watchlist extends React.PureComponent {
   constructor(props) {
@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => {
   return {
     removeFromWatchlist: symbol => dispatch(removeFromWatchlist(symbol)),
     fetchWatchlist: () => dispatch(fetchWatchlist()),
-    getAllocations: () => dispatch(fetchAllocationsRequest())
+    getAllocations: () => dispatch(fetchAllocationsBegin())
   };
 };
 

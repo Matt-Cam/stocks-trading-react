@@ -99,6 +99,10 @@ export const fetchHistoricPricesFailure = error => ({
 
 /*--------------------End Historic Prices LOGIC--------------------*/
 
+/*--------------------Assets Logic Here--------------------*/
+
+/*--------------------End Assets Logic--------------------*/
+
 /*--------------------STOCKS LOGIC--------------------*/
 export const fetchStocksIfNecessary = () => async (dispatch, getState) => {
   if (getStocks(getState()).length) {
@@ -146,6 +150,7 @@ export const makeTransaction = (symbol, side, amount) => async dispatch => {
 
     //here we can use the response of API to update our allocations
     dispatch(fetchAllocationsSuccess(data.allocations));
+    //then update the transactions state/store
     dispatch(fetchTransactions());
   } catch (err) {
     console.log(err);
@@ -174,12 +179,12 @@ export const fetchTransactionsSuccess = data => {
 /*--------------------END TRANSACTIONS LOGIC--------------------*/
 
 /*--------------------ALLOCATIONS LOGIC--------------------*/
-export const fetchAllocationsRequest = () => async dispatch => {
+export const fetchAllocationsBegin = () => async dispatch => {
   try {
     const data = await AllocationsFetcher.getAllocations();
     dispatch(fetchAllocationsSuccess(data));
   } catch (err) {
-    console.log(err);
+    console.error(`Error produced from fetchAllocationsBegin: ${err}`);
   }
 };
 
