@@ -123,7 +123,7 @@ export const fetchStocksSuccess = data => {
 export const tickerSubscription = symbol => (dispatch, getState) => {
   ConnectTicker.connect().then(client => {
     client.subscribe('/livestream/' + symbol, update => {
-      console.log(update);
+      console.log(`Price updated with data: ${update}`);
       dispatch(updateTickerPrice(update));
     });
   });

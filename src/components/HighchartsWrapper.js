@@ -12,30 +12,24 @@ export default class HighchartsWrapper extends React.Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <div>HighchartsWrapper Component mounted</div>
-        <div ref={this.graph} />
-      </React.Fragment>
-    );
+    return <div ref={this.graph} />;
   }
 
   componentDidMount() {
     this.createChart();
-    // this.chart.update({
-    //   ...defaultConfig,
-    //   series: [
-    //     {
-    //       name: 'Detailed',
-    //       data: this.cleanForHighcharts(this.props.data.prices.detailed)
-    //     },
-    //     {
-    //       name: 'Aggregated',
-    //       data: this.cleanForHighcharts(this.props.data.prices.aggregated)
-    //     }
-    //   ]
-    //   //series: this.props.data
-    // });
+    this.chart.update({
+      ...defaultConfig,
+      series: [
+        {
+          name: 'Detailed',
+          data: this.cleanForHighcharts(this.props.data.prices.detailed)
+        },
+        {
+          name: 'Aggregated',
+          data: this.cleanForHighcharts(this.props.data.prices.aggregated)
+        }
+      ]
+    });
   }
 
   //our Highcharts is expecting date objects, and x and y coordinates
@@ -82,9 +76,6 @@ export default class HighchartsWrapper extends React.Component {
 const defaultConfig = {
   chart: {
     type: 'line'
-  },
-  title: {
-    text: 'AAPL'
   },
   subtitle: {
     text: ''

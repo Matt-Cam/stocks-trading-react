@@ -4,13 +4,12 @@ import { fetchHistoricPrices } from '../redux/actions';
 import { getHistoricPrices } from '../redux/selectors';
 
 const StockPriceDataWrapper = props => {
-  //const [data, setData] = useState([]);
   const { error, loading, prices } = props.priceData;
-  useEffect(() => {
-    props.fetchHistoricPrices(props.symbol, 'today');
-  }, props.symbol);
 
-  //or maybe pass [] instead of props.symbol if this doesn't work
+  //rerun useEffect every time the selected symbol changes
+  useEffect(() => {
+    props.fetchHistoricPrices(props.symbol, props.period);
+  }, [props.symbol, props.period]);
 
   //if the prices are loading, print loading, otherwise render prop
   if (!loading) {

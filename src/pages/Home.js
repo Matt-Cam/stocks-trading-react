@@ -5,11 +5,11 @@ import Watchlist from '../components/Watchlist';
 export const StockContext = React.createContext();
 
 const Home = () => {
+  //setting the default selected stock context to STRK
   const [selectedStock, setSelected] = useState('STRK');
 
   return (
     <StockContext.Provider value={[selectedStock, setSelected]}>
-      Home loaded with symbol: {selectedStock}
       <React.Fragment>
         <Watchlist />
         <StocksGraph />
