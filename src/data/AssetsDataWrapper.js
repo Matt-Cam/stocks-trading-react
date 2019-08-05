@@ -8,58 +8,36 @@ import { getStocks, getAllocations } from '../redux/selectors';
 import { map } from 'highcharts';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
-class AssetsDataWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.refreshedData = defaultData;
-  }
-  componentDidMount() {
-    this.props.fetchStocksIfNecessary();
-    this.props.fetchAllocationsBegin();
-    console.log(this.props.stocks);
-    console.log(this.props.allocations);
-  }
-  componentDidUpdate() {
-    if (this.props.stocks.length && this.props.allocations.length) {
-      console.log(
-        this.mergeStocksWithAllocations(
-          this.props.stocks,
-          this.props.allocations
-        )
-      );
-    }
-  }
-  render() {
-    if (!this.props.stocks.length || !this.props.allocations.length) {
-      return 'Loading...';
-    } else {
-      return this.props.render({
+const AssetsDataWrapper = props => {
+  useEffect(() => {
+    props.fetchStocksIfNecessary();
+    props.fetchAllocationsBegin();
+  }, []);
+
+  return !props.stocks.length || !props.allocations.length
+    ? 'Loading...'
+    : props.render({
         ...defaultData,
-        rowData: this.mergeStocksWithAllocations(
-          this.props.stocks,
-          this.props.allocations
-        )
+        rowData: mergeStocksWithAllocations(props.stocks, props.allocations)
       });
-    }
-  }
-  mergeStocksWithAllocations = (stocks, allocs) => {
-    let arrayToReturn;
-    arrayToReturn = stocks.map(stock => {
-      let newObj;
-      let amount = allocs.find(el => {
-        return el.symbol === stock.symbol;
-      });
-      newObj = {
-        stock: stock.symbol,
-        amount: amount.amount,
-        currentPrice: stock.lastTick.price,
-        total: amount.amount * stock.lastTick.price
-      };
-      return newObj;
+};
+const mergeStocksWithAllocations = (stocks, allocs) => {
+  let arrayToReturn;
+  arrayToReturn = stocks.map(stock => {
+    let newObj;
+    let amount = allocs.find(el => {
+      return el.symbol === stock.symbol;
     });
-    return arrayToReturn;
-  };
-}
+    newObj = {
+      stock: stock.symbol,
+      amount: amount.amount,
+      currentPrice: stock.lastTick.price,
+      total: amount.amount * stock.lastTick.price
+    };
+    return newObj;
+  });
+  return arrayToReturn;
+};
 
 const defaultData = {
   columnDefs: [
