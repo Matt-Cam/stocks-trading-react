@@ -5,9 +5,6 @@ import {
   fetchAllocationsBegin
 } from '../redux/actions';
 import { getStocks, getAllocations } from '../redux/selectors';
-import { map } from 'highcharts';
-import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
-
 const AssetsDataWrapper = props => {
   useEffect(() => {
     props.fetchStocksIfNecessary();

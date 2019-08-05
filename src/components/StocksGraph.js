@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import HighchartsWrapper from './HighchartsWrapper';
 import StockPriceDataWrapper from '../data/StockPriceDataWrapper';
 import { StockContext } from '../pages/Home';
+import { Link, withRouter } from 'react-router-dom';
 
 const StocksGraph = props => {
   const [selectedStock, setSelected] = useContext(StockContext);
@@ -17,6 +18,12 @@ const StocksGraph = props => {
           <option value='today'>today</option>
           <option value='yearly'>yearly</option>
         </select>
+        <Link
+          className='stock-graph__link'
+          to={{ pathname: `/details/${selectedStock}`, state: { foo: 'bar' } }}
+        >
+          Details
+        </Link>
       </h2>
 
       <StockPriceDataWrapper

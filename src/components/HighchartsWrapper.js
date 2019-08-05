@@ -98,6 +98,9 @@ const defaultConfig = {
       year: '%Y'
     }
   },
+  title: {
+    text: 'Stock Prices'
+  },
   tooltip: {
     formatter: function() {
       return (
