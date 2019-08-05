@@ -3,6 +3,8 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
+//props need to contain both columnDefs and rowData
+//We are setting columns defs with props because AG Grid Wrapper needs to handle multiple types of Ag Grid types (namely assets and transactions)
 const AGGridWrapper = props => {
   console.log(props.data);
 

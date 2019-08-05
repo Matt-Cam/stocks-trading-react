@@ -1,59 +1,70 @@
-import React from 'react';
-import TransactionRow from './TransactionRow';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import TransactionsDataWrapper from '../data/TransactionsDataWrapper';
+import AGGridWrapper from './AGGridWrapper';
 
 const StockTransactions = () => {
   return (
     <React.Fragment>
       <section class='stock-transactions full-width'>
-        <div class='stock-transactions__grid-row'>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              Transaction ID
-            </span>
-          </div>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              Date
-            </span>
-          </div>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              stock
-            </span>
-          </div>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              amount
-            </span>
-          </div>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              direction
-            </span>
-          </div>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              price
-            </span>
-          </div>
-          <div class='stock-transactions__grid-cell'>
-            <span class='stock-transactions__grid-text stock-transactions__grid-text--white'>
-              total
-            </span>
-          </div>
-        </div>
         <TransactionsDataWrapper
-          render={transactions =>
-            transactions.map((transaction, i) => (
-              <TransactionRow transaction={transaction} index={i} />
-            ))
-          }
+          render={data => {
+            cleanDataForAGGrid(data);
+            return (
+              <AGGridWrapper
+                data={{ ...gridData, rowData: cleanDataForAGGrid(data) }}
+              />
+            );
+          }}
         />
       </section>
     </React.Fragment>
   );
+};
+//columns should be:
+//date, stock, amount, direction, price, total
+const cleanDataForAGGrid = data => {
+  console.log(data);
+  let arrToReturn = data.map(transaction => {
+    return {
+      date: transaction.date,
+      stock: transaction.symbol,
+      amount: transaction.amount,
+      price: transaction.tickPrice,
+      direction: transaction.side,
+      total: transaction.cost
+    };
+  });
+  return arrToReturn;
+};
+let gridData = {
+  columnDefs: [
+    {
+      headerName: 'Date',
+      field: 'date'
+    },
+    {
+      headerName: 'stock',
+      field: 'stock'
+    },
+    {
+      headerName: 'Amount',
+      field: 'amount'
+    },
+    {
+      headerName: 'Direction',
+      field: 'direction'
+    },
+    {
+      headerName: 'Price',
+      field: 'price'
+    },
+    {
+      headerName: 'Total',
+      field: 'total'
+    }
+  ],
+  rowData: []
 };
 
 export default connect(

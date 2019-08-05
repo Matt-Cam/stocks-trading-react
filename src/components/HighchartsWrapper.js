@@ -52,12 +52,10 @@ export default class HighchartsWrapper extends React.Component {
         series: [
           {
             name: 'Detailed',
-            // data: [{ x: new Date(), y: 20 }]
             data: this.cleanForHighcharts(this.props.data.prices.detailed)
           },
           {
             name: 'Aggregated',
-            //data: [{ x: new Date(), y: 33 }]
             data: this.cleanForHighcharts(this.props.data.prices.aggregated)
           }
         ]
