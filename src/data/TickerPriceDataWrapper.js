@@ -7,7 +7,7 @@ const TickerPriceDataWrapper = props => {
   useEffect(() => {
     console.log('here');
     props.tickerSubscription(props.symbol);
-  });
+  }, []);
 
   return (
     <div>{props.tickerPrice ? props.tickerPrice.toFixed(2) : 'loading...'}</div>

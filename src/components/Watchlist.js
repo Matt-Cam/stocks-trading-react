@@ -58,19 +58,20 @@ class Watchlist extends React.PureComponent {
         </Modal>
 
         <div className='stock-list__grid'>
-          {this.props.mergedList.map(stock => {
-            const { symbol, amount } = stock;
-            return (
-              <React.Fragment>
-                <StockRow
-                  symbol={symbol}
-                  amount={amount}
-                  onDelete={this.props.removeFromWatchlist}
-                  key={symbol}
-                />
-              </React.Fragment>
-            );
-          })}
+          {this.props.mergedList &&
+            this.props.mergedList.map(stock => {
+              const { symbol, amount } = stock;
+              return (
+                <React.Fragment>
+                  <StockRow
+                    symbol={symbol}
+                    amount={amount}
+                    onDelete={this.props.removeFromWatchlist}
+                    key={symbol}
+                  />
+                </React.Fragment>
+              );
+            })}
         </div>
       </section>
     );
@@ -79,8 +80,8 @@ class Watchlist extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    watchlist: getWatchlist(state),
-    allocations: getAllocations(state),
+    //watchlist: getWatchlist(state)
+    //allocations: getAllocations(state),
     mergedList: getMergedWatchListAllocations(state)
   };
 };

@@ -1,12 +1,22 @@
-export const getStocks = state => state.stocks;
+export const getStocks = state => {
+  console.log('getStocks selector run');
+  return state.stocks;
+};
 
-export const getWatchlist = state => state.watchlist;
+export const getWatchlist = state => {
+  console.log('getWatchlist selector run');
+  return state.watchlist;
+};
 
 export const getTransactions = state => {
+  console.log('getTransactions selector run');
   return state.transactions.reverse();
 };
 
-export const getAllocations = state => state.allocations;
+export const getAllocations = state => {
+  console.log('getAllocations selector run');
+  return state.allocations;
+};
 
 export const getMergedWatchListAllocations = state => {
   console.log('getMergedWatchlist has been run');
@@ -23,7 +33,7 @@ export const getMergedWatchListAllocations = state => {
     if (allocation) {
       objToReturn.amount = allocation.amount;
     }
-    //this watchedStock obj is now one of the stocks we 'watch' with its respective allocation amount
+    //this objToReturn is now one of the stocks we 'watch' with its respective allocation amount
     return objToReturn;
   });
   return merged;
