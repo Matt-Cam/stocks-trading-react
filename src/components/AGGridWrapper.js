@@ -11,7 +11,7 @@ const AGGridWrapper = props => {
       className='ag-theme-balham'
       style={{
         height: '500px',
-        width: '600px'
+        width: '1500px'
       }}
     >
       <AgGridReact
